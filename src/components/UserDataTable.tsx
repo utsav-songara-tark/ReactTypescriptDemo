@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import userData from '../data/userdata.json';
 
 export function UserDataTable() {
+	const navigate = useNavigate();
+
+	function handleClick(userId: number) {
+		navigate(`/user-data/${userId}`);
+	}
+
 	return (
 		<div className='container'>
 			<h1 className='text-center'>User Data</h1>
@@ -20,7 +27,9 @@ export function UserDataTable() {
 					{userData.map((user, index) => (
 						<tr key={index}>
 							<th scope='row'>{index + 1}</th>
-							<td>{user.first_name}</td>
+							<td className='link-primary' onClick={() => handleClick(user.id)}>
+								{user.first_name}
+							</td>
 							<td>{user.last_name}</td>
 							<td>{user.email}</td>
 							<td>{user.gender}</td>

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
+import { login } from '../services/authService';
 import '../styles/login.css';
 
 export default function Login() {
@@ -15,7 +16,11 @@ export default function Login() {
 		if (username === 'admin' && password === 'admin') {
 			userContext.setIsLogin(true);
 			userContext.setUserName(username);
-			navigation('/', { state: { username: username } });
+			const isLogin = login({
+				username,
+				password,
+			});
+			if (isLogin) navigation('/');
 		} else {
 			setError('Invalid username or password');
 		}
